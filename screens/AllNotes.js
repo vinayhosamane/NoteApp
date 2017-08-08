@@ -3,15 +3,113 @@ import {
   StyleSheet,
   Text,
   View,
-  Button
+  Button,
+   ListView,
+   ScrollView,
+   TouchableHighlight
 } from 'react-native';
+
+import fetchNotes from '../components/fetchNotes';
+
+const list = [
+  {
+    name: 'Amy Farha Vinay Hosamane',
+    subtitle: 'Vice President'
+  },
+  {
+    name: 'Chris Jackson',
+    subtitle: 'Vice Chairman'
+  },
+  {
+    name: 'Amy Farha',
+    subtitle: 'Vice President'
+  },
+  {
+    name: 'Chris Jackson',
+    subtitle: 'Vice Chairman'
+  },
+  {
+    name: 'Amy Farha',
+    subtitle: 'Vice President'
+  },
+  {
+    name: 'Chris Jackson',
+    subtitle: 'Vice Chairman'
+  },
+  {
+    name: 'Amy Farha',
+    subtitle: 'Vice President'
+  },
+  {
+    name: 'Chris Jackson',
+    subtitle: 'Vice Chairman'
+  }
+];
+
+export default class AllNotes extends Component {
+
+  constructor() {
+   super();
+   const ds = new ListView.DataSource({
+     rowHasChanged: (r1, r2) => r1 !== r2,
+   });
+   this.state = {
+      selectedIndex: 0,
+      value: 0.5,
+      dataSource: ds.cloneWithRows(list),
+    };
+ }
+
+  componentWillMount()
+  {
+    console.log(this.props.navigation);
+  }
+
+onPress()
+{
+  console.log("next page");
+  this.props.navigation.navigate('NewNotePage',"i am props");
+}
+
+_onPressRow(rowData) {
+
+    console.log(rowData);
+}
+
+renderRow = (rowData) => {
+   return (
+     <TouchableHighlight onPress={this._onPressRow.bind(this,rowData)}>
+     <View>
+          <Text style={{textAlign: 'center', marginTop:10, fontSize:20,color:'blue',fontWeight: "bold"}}>{rowData.name}</Text>
+    </View>
+    </TouchableHighlight>
+  );
+}
+
+  render() {
+
+     const { navigate } = this.props.navigation;
+console.log(navigate);
+
+    return (
+      <View style={styles.container}>
+
+      <ListView dataSource={this.state.dataSource}
+                renderRow= {this.renderRow}
+                renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
+        <Button
+          title = "Add Note"
+          onPress = {this.onPress.bind(this)}
+        />
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#fffaf0',
   },
   welcome: {
     fontSize: 20,
@@ -23,43 +121,10 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  separator: {
+      flex: 1,
+      height: 4,
+      backgroundColor: '#8E8E8E',
+      marginTop: 10,
+  },
 });
-
-export default class AllNotes extends Component {
-
-  componentWillMount()
-  {
-    console.log(this.props.navigation);
-  }
-
-onPress()
-{
-  console.log("next page");
-  this.props.navigation.navigate('NoteDetailsPage',"i am props");
-}
-
-  render() {
-
-     const { navigate } = this.props.navigation;
-console.log(navigate);
-
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native Navigation Sample!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-        <Button
-          title = "go to next page"
-          onPress = {this.onPress.bind(this)}
-        />
-      </View>
-    );
-  }
-}
