@@ -8,7 +8,7 @@ This is a Assignment which is a simple Note like application created using React
 2.You can Edit , Delete or View the Note.
 
 
-Screenshots
+# Screenshots
 
 ![Alt text](/screenshots/MainScreenP.png?raw=true "Main Screen")
 ![Alt text](/screenshots/NoteDetailP.png?raw=true "Note Detail Screen")
