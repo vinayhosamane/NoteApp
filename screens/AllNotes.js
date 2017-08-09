@@ -93,10 +93,24 @@ export default class AllNotes extends Component {
 
   }
 
+  updateListView = ()=>{
+
+    that = this;
+
+    fetchNotes.getAllNotes(function(response){
+      if(response)
+      {
+        that.setState({dataSource: that.state.dataSource.cloneWithRows(response),
+        notes:response});
+      }
+    });
+  }
+
+
 onPress()
 {
   console.log("next page");
-  this.props.navigation.navigate('NewNotePage',{userinfo:this.state});
+  this.props.navigation.navigate('NewNotePage',{updateList:this.updateListView.bind(this)});
 }
 
 _onPressRow(rowData) {
