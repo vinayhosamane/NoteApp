@@ -10,6 +10,7 @@ This is a Assignment which is a simple Note like application created using React
 
 Screenshots
 
+![Alt text](/screenshots/NotesListScreenPortrait?raw=true "Optional Title")
 
 
 
