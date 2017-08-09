@@ -136,16 +136,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fffaf0'
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
   separator: {
       flex: 1,
       height: 1,
