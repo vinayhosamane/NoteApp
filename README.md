@@ -6,3 +6,10 @@ This is a Assignment which is a simple Note like application created using React
 
 
 2.You can Edit , Delete or View the Note.
+
+
+Screenshots
+
+
+
+
