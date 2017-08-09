@@ -9,7 +9,8 @@ import {
    TouchableHighlight
 } from 'react-native';
 
-import fetchNotes from '../components/fetchNotes';
+import fetchNotes from "../components/fetchNotes";
+import notesListArray from "../components/notesListArray";
 
 const list = [
   {
@@ -48,27 +49,54 @@ const list = [
 
 export default class AllNotes extends Component {
 
-  constructor() {
-   super();
+  constructor(props) {
+   super(props)
    const ds = new ListView.DataSource({
-     rowHasChanged: (r1, r2) => r1 !== r2,
+     rowHasChanged: (r1, r2) => r1 !== r2
    });
    this.state = {
-      selectedIndex: 0,
-      value: 0.5,
+       notes : [],
       dataSource: ds.cloneWithRows(list),
+      isLoading : false
     };
  }
 
-  componentWillMount()
+ componentWillMount()
+ {
+   console.log(this.props.navigation);
+
+   that = this;
+
+   fetchNotes.getAllNotes(function(response){
+     if(response)
+     {
+       notesListArray.push(response);
+       that.setState({dataSource: that.state.dataSource.cloneWithRows(response),
+       notes:response});
+     }
+   });
+ }
+
+  componentDidMount()
   {
     console.log(this.props.navigation);
+
+    that = this;
+
+    fetchNotes.getAllNotes(function(response){
+      if(response)
+      {
+        that.setState({dataSource: that.state.dataSource.cloneWithRows(response),
+        notes:response});
+      }
+    });
+
   }
 
 onPress()
 {
   console.log("next page");
-  this.props.navigation.navigate('NewNotePage',"i am props");
+  this.props.navigation.navigate('NewNotePage',{userinfo:this.state});
 }
 
 _onPressRow(rowData) {
@@ -80,7 +108,7 @@ renderRow = (rowData) => {
    return (
      <TouchableHighlight onPress={this._onPressRow.bind(this,rowData)}>
      <View>
-          <Text style={{textAlign: 'center', marginTop:10, fontSize:20,color:'blue',fontWeight: "bold"}}>{rowData.name}</Text>
+          <Text style={{textAlign: 'center', marginTop:10, fontSize:20,color:'blue',fontWeight: "bold"}}>{rowData[0]}</Text>
     </View>
     </TouchableHighlight>
   );
@@ -88,10 +116,19 @@ renderRow = (rowData) => {
 
   render() {
 
+  //  var notesFromNavigationProp = this.props.navigation.state.params;
+  //  that = this;
+  //  if(notesFromNavigationProp)
+  //  {
+  //    that.setState({dataSource: that.state.dataSource.cloneWithRows(notesFromNavigationProp),
+  //    notes:notesFromNavigationProp});
+  //  }
+
      const { navigate } = this.props.navigation;
 console.log(navigate);
 
     return (
+
       <View style={styles.container}>
 
       <ListView dataSource={this.state.dataSource}
@@ -109,7 +146,7 @@ console.log(navigate);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fffaf0',
+    backgroundColor: '#fffaf0'
   },
   welcome: {
     fontSize: 20,

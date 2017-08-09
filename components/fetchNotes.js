@@ -1,79 +1,73 @@
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from "react-native";
 
 let fetchNotes = {};
 
 var notesList = [];
 
-fetchNotes.getAllNotes = (callback)=>{
-  try{
+fetchNotes.getAllNotes = (callback)=> {
+  try {
     AsyncStorage.getAllKeys((err, keys) => {
-  AsyncStorage.multiGet(keys, (err, stores) => {
-  stores.map((result, i, store) => {
-  // get at each store's key/value so you can work with it
-  let key = store[i][0];
-  let value = store[i][1];
-  var temp = [];
-  temp.push(key);
-  temp.push(value);
+      AsyncStorage.multiGet(keys, (err, stores) => {
+        notesList = [];
+        stores.map((result, i, store) => {
+          // get at each store's key/value so you can work with it
+          let title = store[i][0];
+          let describe = store[i][1];
+          var temp = [];
+          temp.push(title);
+          temp.push(describe);
 
-  notesList.push(temp);
+          notesList.push(temp);
+        });
+        callback(notesList);
+      });
+    });
+  } catch (e) {
+    console.log("caught error", e);
+  }
+};
 
-  });
-  callback(notesList);
-  });
-  });
-  }
-  catch(e){
-      console.log('caught error', e);
-  }
-}
-
-fetchNotes.getNote = (key,callback)=>{
-  try{
-      let value = AsyncStorage.getItem(key);
-      if (value != null){
-          callback(value);
-      }
-      else {
-          callback(null);
-      }
-  }
-  catch(e){
-      console.log('caught error', e);
-  }
-}
-
-fetchNotes.EditNote = (object,callback)=>
-{
+fetchNotes.getNote = (key, callback) => {
   try {
-  AsyncStorage.setItem(object.key,object.value);
-  callback(true);
-} catch (error) {
-  // Error saving data
-  console.log(error);
-}
-}
+    let value = AsyncStorage.getItem(key);
+    if (value != null) {
+      callback(value);
+    } else {
+      callback(null);
+    }
+  } catch (e) {
+    console.log("caught error", e);
+  }
+};
 
-fetchNotes.createNote = (object,callback)=>
-{
+fetchNotes.EditNote = (object, callback) => {
   try {
-  AsyncStorage.setItem(object.key,object.value);
-  callback(true);
-} catch (error) {
-  // Error saving data
-  console.log(error);
-}
-}
+    AsyncStorage.setItem(object.key, object.value);
+    callback(true);
+  } catch (error) {
+    // Error saving data
+    console.log(error);
+  }
+};
 
-fetchNotes.deleteNote = (key,callback)=>
-{
+fetchNotes.createNote = (object, callback) => {
   try {
-  AsyncStorage.removeItem(key);
-  callback(true);
-} catch (error) {
-  // Error saving data
-  console.log(error);
-}
-}
+    AsyncStorage.setItem(object.key, object.value);
+    callback(true);
+  } catch (error) {
+    // Error saving data
+    console.log(error);
+  }
+};
+
+fetchNotes.deleteNote = (key, callback) => {
+  try {
+    AsyncStorage.removeItem(key);
+    callback(true);
+  } catch (error) {
+    // Error saving data
+    console.log(error);
+  }
+};
 
 module.exports = fetchNotes;

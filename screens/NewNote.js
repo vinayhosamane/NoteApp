@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 
 import fetchNotes from "../components/fetchNotes";
+import notesListArray from "../components/notesListArray";
 
 export default class NewNote extends Component {
   constructor(props) {
@@ -22,6 +23,22 @@ export default class NewNote extends Component {
       { key: that.state.title, value: that.state.description },
       function(response) {
         if (response) {
+           var note = [that.state.title,that.state.description];
+           //notesListArray.push(note);
+
+          //  const { state } = that.props.navigation.params;
+           //
+          //  state.userinfo.setState({dataSource: state.classState.dataSource.cloneWithRows(response),
+          //  notes:response});
+
+          var oldState = that.props.navigation.state.params.userinfo;
+
+          // oldState.setState({
+          //   dataSource = oldState.dataSource.cloneWithRows(oldState.notes)
+          // });
+
+          console.log(that.props.navigation.state.params.userinfo);
+
           that.props.navigation.goBack();
         }
       }
@@ -29,6 +46,8 @@ export default class NewNote extends Component {
   }
 
   render() {
+    const { navigate } = this.props.navigation;
+
     return (
       <View style={styles.container}>
         <TextInput
