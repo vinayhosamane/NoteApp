@@ -11,6 +11,7 @@ import {
 
 import fetchNotes from "../components/fetchNotes";
 import notesListArray from "../components/notesListArray";
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const list = [
   {
@@ -116,13 +117,15 @@ onPress()
 _onPressRow(rowData) {
 
     console.log(rowData);
+
+    this.props.navigation.navigate('NoteDetailsPage',{note:rowData});
 }
 
 renderRow = (rowData) => {
    return (
-     <TouchableHighlight onPress={this._onPressRow.bind(this,rowData)}>
+     <TouchableHighlight onPress={this._onPressRow.bind(this,rowData)}  underlayColor="gray">
      <View>
-          <Text style={{textAlign: 'center', marginTop:10, fontSize:20,color:'blue',fontWeight: "bold"}}>{rowData[0]}</Text>
+          <Text style={{textAlign: 'center', marginTop:10, fontSize:27,color:'blue',fontWeight: "bold",underlayColor:'#fffaf0'}}>{rowData[0]}</Text>
     </View>
     </TouchableHighlight>
   );
@@ -130,29 +133,25 @@ renderRow = (rowData) => {
 
   render() {
 
-  //  var notesFromNavigationProp = this.props.navigation.state.params;
-  //  that = this;
-  //  if(notesFromNavigationProp)
-  //  {
-  //    that.setState({dataSource: that.state.dataSource.cloneWithRows(notesFromNavigationProp),
-  //    notes:notesFromNavigationProp});
-  //  }
-
      const { navigate } = this.props.navigation;
 console.log(navigate);
 
     return (
-
       <View style={styles.container}>
+      <View style={{alignItems:"flex-end",marginRight:20}}>
+      <TouchableHighlight
+        onPress = {this.onPress.bind(this)}
+         underlayColor="gray" >
+        <Text style={{fontSize:25 , alignItems:"center",marginBottom:10,marginTop:10}}> Add Note </Text>
+      </TouchableHighlight>
+      </View>
 
       <ListView dataSource={this.state.dataSource}
                 renderRow= {this.renderRow}
                 renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
-        <Button
-          title = "Add Note"
-          onPress = {this.onPress.bind(this)}
-        />
       </View>
+
+
     );
   }
 }
@@ -174,7 +173,7 @@ const styles = StyleSheet.create({
   },
   separator: {
       flex: 1,
-      height: 4,
+      height: 1,
       backgroundColor: '#8E8E8E',
       marginTop: 10,
   },

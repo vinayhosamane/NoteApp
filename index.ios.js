@@ -13,4 +13,6 @@ import {
 } from 'react-native';
 import App from './components/index';
 
+//console.disableYellowBox = true;
+
 AppRegistry.registerComponent('NoteApplication', () => App);
