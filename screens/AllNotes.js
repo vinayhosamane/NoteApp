@@ -118,7 +118,7 @@ _onPressRow(rowData) {
 
     console.log(rowData);
 
-    this.props.navigation.navigate('NoteDetailsPage',{note:rowData});
+    this.props.navigation.navigate('NoteDetailsPage',{note:rowData,updateList:this.updateListView.bind(this)});
 }
 
 renderRow = (rowData) => {

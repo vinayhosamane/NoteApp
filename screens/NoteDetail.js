@@ -2,27 +2,52 @@ import React, { Component } from "react";
 import {
   StyleSheet,
    Text,
-   View ,
-   TouchableHighlight
-} from "react-native";
+    View,
+    TouchableHighlight,
+    Alert
+   } from "react-native";
+
+import fetchNotes from "../components/fetchNotes";
 
 export default class NoteDetail extends Component {
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      currentNoteTitle: this.props.navigation.state.params.note[0],
+      currentNoteDescription: this.props.navigation.state.params.note[1]
+    };
+  }
 
-editPress(){
-  console.log('Edit pressed');
-}
+  editPress() {
+    console.log("Edit pressed");
+  }
 
-deletePress(){
-  console.log('delete pressed');
-}
+  deletePress() {
+
+var that = this;
+    console.log("delete pressed");
+    fetchNotes.deleteNote(that.state.currentNoteTitle,function(response){
+      Alert.alert(
+  'Note Alert',
+  'Note is succefully deleted',
+  [
+    {text: 'OK', onPress: () => {
+      that.props.navigation.state.params.updateList();
+      that.props.navigation.goBack();
+    }},
+  ]
+)
+    });
+  }
 
   render() {
-var that = this;
+    var that = this;
 
     console.log(that.props.navigation.state.params);
     var noteTitle = that.props.navigation.state.params.note[0];
     var noteDescription = that.props.navigation.state.params.note[1];
+
     return (
       <View style={styles.container}>
         <Text style={styles.title}>
@@ -33,16 +58,22 @@ var that = this;
         </Text>
 
         <View style={styles.buttonsView}>
-        <TouchableHighlight
-          onPress = {this.editPress.bind(this)}
-           underlayColor="gray" >
-          <Text style={{padding:50,fontSize:20,color:'blue'}}> EditNote </Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          onPress = {this.deletePress.bind(this)}
-           underlayColor="gray" >
-          <Text style={{padding:50,fontSize:20,color:'blue'}}> Delete Note </Text>
-        </TouchableHighlight>
+          <TouchableHighlight
+            onPress={this.editPress.bind(this)}
+            underlayColor="gray"
+          >
+            <Text style={{ padding: 50, fontSize: 20, color: "blue" }}>
+              {" "}EditNote{" "}
+            </Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={this.deletePress.bind(this)}
+            underlayColor="gray"
+          >
+            <Text style={{ padding: 50, fontSize: 20, color: "blue" }}>
+              {" "}Delete Note{" "}
+            </Text>
+          </TouchableHighlight>
         </View>
       </View>
     );
@@ -59,25 +90,25 @@ const styles = StyleSheet.create({
     fontSize: 25,
     textAlign: "center",
     margin: 10,
-    marginTop:50,
-    fontWeight:'bold'
+    marginTop: 50,
+    fontWeight: "bold"
   },
   description: {
     textAlign: "center",
     color: "#333333",
-    marginTop:20,
+    marginTop: 20,
     marginBottom: 5,
-    marginLeft:20,
-    marginRight:20,
-    fontSize : 20
+    marginLeft: 20,
+    marginRight: 20,
+    fontSize: 20
   },
   buttonsView: {
-    flex:0.2,
-    flexDirection:'row',
-    marginTop:50,
-    marginLeft:40,
-    marginRight:40,
-    alignItems:'center',
-    justifyContent:'space-around'
+    flex: 0.2,
+    flexDirection: "row",
+    marginTop: 50,
+    marginLeft: 40,
+    marginRight: 40,
+    alignItems: "center",
+    justifyContent: "space-around"
   }
 });
