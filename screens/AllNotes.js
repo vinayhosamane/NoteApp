@@ -66,33 +66,8 @@ export default class AllNotes extends Component {
  {
    console.log(this.props.navigation);
 
-   that = this;
-
-   fetchNotes.getAllNotes(function(response){
-     if(response)
-     {
-       notesListArray.push(response);
-       that.setState({dataSource: that.state.dataSource.cloneWithRows(response),
-       notes:response});
-     }
-   });
+   this.updateListView();
  }
-
-  componentDidMount()
-  {
-    console.log(this.props.navigation);
-
-    that = this;
-
-    fetchNotes.getAllNotes(function(response){
-      if(response)
-      {
-        that.setState({dataSource: that.state.dataSource.cloneWithRows(response),
-        notes:response});
-      }
-    });
-
-  }
 
   updateListView = ()=>{
 
