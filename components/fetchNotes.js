@@ -41,13 +41,32 @@ fetchNotes.getNote = (key, callback) => {
 };
 
 fetchNotes.EditNote = (object, callback) => {
-  try {
-    AsyncStorage.setItem(object.key, object.value);
-    callback(true);
-  } catch (error) {
-    // Error saving data
-    console.log(error);
+
+  if(object.oldkey==object.newkey)
+  {
+    try {
+      AsyncStorage.setItem(object.oldkey, object.value);
+      callback(true);
+    } catch (error) {
+      // Error saving data
+      console.log(error);
+    }
   }
+  else {
+      fetchNotes.deleteNote(object.oldkey,function(response){
+        if(response)
+        {
+          try {
+          AsyncStorage.setItem(object.newkey, object.value);
+          callback(true);
+        } catch (error) {
+          // Error saving data
+          console.log(error);
+        }
+        }
+      });
+  }
+
 };
 
 fetchNotes.createNote = (object, callback) => {
