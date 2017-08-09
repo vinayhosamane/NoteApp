@@ -10,7 +10,11 @@ This is a Assignment which is a simple Note like application created using React
 
 Screenshots
 
-![Alt text](/screenshots/NotesListScreenPortrait?raw=true "Optional Title")
+![Alt text](/screenshots/MainScreenP.png?raw=true "Main Screen")
+![Alt text](/screenshots/NoteDetailP.png?raw=true "Note Detail Screen")
+![Alt text](/screenshots/MainScreenL.png?raw=true "Main screen in Landscape")
+![Alt text](/screenshots/AddNoteScreen.png?raw=true "Add Note Screen")
+
 
 
 
